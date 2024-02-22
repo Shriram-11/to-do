@@ -5,24 +5,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todo List</title>
     <style>
-      table {
-        width: 100%;
-        border-collapse: collapse;
+      body {
+        font-family: "lato", sans-serif;
+        background-color: #f6f7f9; /* Light background color */
       }
-      th,
-      td {
-        padding: 8px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
+
+      h1 {
+        text-align: center;
+        padding: 15px;
+        background-color: #3f6184; /* Dark blue */
+        color: white;
+        margin: 0;
       }
-      th {
-        background-color: #f2f2f2;
+
+      .container {
+        max-width: 1000px;
+        margin: 20px auto; /* Center the container */
+        padding: 10px;
+        background-color: #f6f7f9; /* Light background color */
+        box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
       }
+
+      h2 {
+        font-size: 26px;
+        margin: 20px 0;
+        text-align: center;
+        small {
+          font-size: 0.5em;
+        }
+      }
+
+      .responsive-table {
+        li {
+          border-radius: 3px;
+          padding: 15px;
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 15px;
+          background-color: #f6f7f9; /* Light background color */
+        }
+        .table-header {
+          background-color: #323a45; /* Dark grey-blue */
+          font-size: 14px;
+          text-transform: uppercase;
+          letter-spacing: 0.03em;
+          font-weight: bold;
+          color: white;
+        }
+        .table-row {
+          background-color: #ffffff; /* White */
+          box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+        }
+        .col-1,
+        .col-2,
+        .col-3,
+        .col-4,
+        .col-5 {
+          flex-basis: 20%;
+        }
+
+        @media all and (max-width: 767px) {
+          .table-header {
+            display: none;
+          }
+          .table-row {
+            background-color: #ffffff; /* White */
+            box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+          }
+          li {
+            display: block;
+          }
+          .col {
+            flex-basis: 100%;
+          }
+          .col {
+            display: flex;
+            padding: 10px 0;
+            &:before {
+              color: #6c7a89; /* Grey */
+              padding-right: 10px;
+              content: attr(data-label);
+              flex-basis: 50%;
+              text-align: right;
+            }
+          }
+        }
+      }
+
       .delete-btn {
-        background-color: #f44336;
+        background-color: #e74c3c; /* Bright red */
         color: white;
         border: none;
-        padding: 6px 12px;
+        padding: 8px 12px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
@@ -30,9 +105,15 @@
         margin: 4px 2px;
         cursor: pointer;
         border-radius: 4px;
+        transition: background-color 0.3s ease;
       }
+
+      .delete-btn:hover {
+        background-color: #d32f2f; /* Darker red on hover */
+      }
+
       .create-btn {
-        background-color: #4caf50;
+        background-color: #5faeb6; /* Turquoise blue */
         color: white;
         border: none;
         padding: 10px 20px;
@@ -40,38 +121,51 @@
         text-decoration: none;
         display: inline-block;
         font-size: 16px;
-        margin-top: 20px;
-        margin-right: 20px;
-        float: right;
+        margin: 0; /* Remove margin for positioning */
         cursor: pointer;
         border-radius: 4px;
+        transition: background-color 0.3s ease;
+        position: fixed; /* Fix the button to the viewport */
+        top: 20px; /* Set top position from the top edge */
+        right: 20px; /* Set right position from the right edge */
+      }
+
+      .create-btn:hover {
+        background-color: #3f6184; /* Darker blue on hover */
       }
     </style>
   </head>
   <body>
     <h1>Todo List</h1>
     <a href="{% url 'newTask' %}" class="create-btn">Create Task</a>
-    <table>
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
+
+    <div class="container">
+      <ul class="responsive-table">
+        <li class="table-header">
+          <div class="col col-1">Title</div>
+          <div class="col col-2">Description</div>
+          <div class="col col-3">Created Date</div>
+          <div class="col col-4">Time</div>
+          <div class="col col-5">Action</div>
+        </li>
         {% for task in tasks %}
-        <tr>
-          <td>{{ task.title }}</td>
-          <td>{{ task.description }}</td>
-          <td>
+        <li class="table-row">
+          <div class="col col-1" data-label="Title">{{ task.title }}</div>
+          <div class="col col-2" data-label="Description">
+            {{ task.description }}
+          </div>
+          <div class="col col-3" data-label="Date Created">
+            {{task.created_date}}
+          </div>
+          <div class="col col-4" data-label="Time">{{task.created_time}}</div>
+          <div class="col col-5" data-label="Action">
             <a href="{% url 'deleteTask' task.id %}" class="delete-btn"
               >Delete</a
             >
-          </td>
-        </tr>
+          </div>
+        </li>
         {% endfor %}
-      </tbody>
-    </table>
+      </ul>
+    </div>
   </body>
 </html>

@@ -4,6 +4,66 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create Task</title>
+    <style>
+      body {
+        font-family: "lato", sans-serif;
+        background-color: #f0f2f5; /* Slightly lighter background color */
+      }
+
+      h1 {
+        text-align: center;
+        padding: 20px; /* Increased padding for better spacing */
+        background-color: #3f6184; /* Dark blue */
+        color: white;
+        margin: 0;
+      }
+
+      form {
+        max-width: 600px;
+        margin: 20px auto; /* Center the form */
+        padding: 20px;
+        background-color: #ffffff; /* White background color */
+        box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      input[type="text"],
+      textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+      }
+
+      button[type="submit"],
+      .back-btn {
+        background-color: #5faeb6; /* Turquoise blue */
+        color: white;
+        border: none;
+        padding: 12px 24px; /* Adjusted padding for better spacing */
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+        margin-right: 10px; /* Added margin between buttons */
+      }
+
+      button[type="submit"]:hover,
+      .back-btn:hover {
+        background-color: #3f6184; /* Darker blue on hover */
+      }
+    </style>
   </head>
   <body>
     <h1>Create a New Task</h1>
@@ -11,9 +71,10 @@
       {% csrf_token %}
       <label for="title">Title:</label><br />
       <input type="text" id="title" name="title" required /><br />
-      <label for="description">Description:</label><br />
-      <textarea id="description" name="description"></textarea><br />
+      <label for="desc">Description:</label><br />
+      <textarea id="desc" name="desc"></textarea><br />
       <button type="submit">Create Task</button>
+      <a href="{% url 'home' %}" class="back-btn">Go Back to Home</a>
     </form>
   </body>
 </html>
